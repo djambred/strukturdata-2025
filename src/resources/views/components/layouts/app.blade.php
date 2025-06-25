@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaisyUI Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.1/dist/full.css" rel="stylesheet" />
+    {{-- @vite('resources/css/app.css') or use <script src="https://cdn.tailwindcss.com"></script> --}}
+    @livewireStyles
+</head>
+
+<body class="bg-base-100">
+
+    @livewire('landing.navbar')
+    @livewire('landing.hero')
+    @livewire('landing.features')
+    @livewire('landing.product-carousel')
+    @livewire('landing.footer')
+
+    @livewireScripts
+</body>
+
+</html>
