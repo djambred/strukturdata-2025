@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\FeatureResource\Pages;
-use App\Filament\Admin\Resources\FeatureResource\RelationManagers;
-use App\Models\Feature;
+use App\Filament\Admin\Resources\ClientResource\Pages;
+use App\Filament\Admin\Resources\ClientResource\RelationManagers;
+use App\Models\Client;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class FeatureResource extends Resource
+class ClientResource extends Resource
 {
-    protected static ?string $model = Feature::class;
+    protected static ?string $model = Client::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,12 +23,13 @@ class FeatureResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->maxLength(255)
-                    ->default(null),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255)
-                    ->default(null),
+                Forms\Components\Select::make('user_id')
+                    ->required()
+                    ->relationship('user', 'name'),
+                Forms\Components\TextInput::make('phone')
+                    ->tel()
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -36,9 +37,9 @@ class FeatureResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\TextColumn::make('user.name')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -72,9 +73,9 @@ class FeatureResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFeatures::route('/'),
-            'create' => Pages\CreateFeature::route('/create'),
-            'edit' => Pages\EditFeature::route('/{record}/edit'),
+            'index' => Pages\ListClients::route('/'),
+            'create' => Pages\CreateClient::route('/create'),
+            'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
     }
 }
